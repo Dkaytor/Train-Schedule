@@ -1,0 +1,32 @@
+.jumbotron {
+  
+  color: gainsboro;
+  background-image: url("c:/users/Dina/Train-Schedule/tracks.png" );
+  text-align: center;
+  border-bottom: 25px;
+}
+
+.card-header {
+  background-color: darkgray;
+}
+button {
+    background-color: blue;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 10px;
+  }
+
+  #vacation-view {
+    position: relative;
+  }
+
+  body {
+    background-image: url("cloudy background.jpg" ); 
+  }
+
+  

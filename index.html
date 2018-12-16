@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+  <meta charset="UTF-8">
+  <title>Train Schedule</title>
+  <!-- jQuery -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <!--Link to reset CSS styles-->
+  <link rel="stylesheet" type="text/css" href="assets/css/resetCSS.css">  
+  <!-- Bootstrap CDN-->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+  <!--Link to Style sheet-->
+  <link rel="stylesheet" type="text/css" href="assets/css/Style.css">
+  <!-- Firebase Reference -->
+  <script src="https://www.gstatic.com/firebasejs/4.12.0/firebase.js"></script>
+  <!-- Moment Reference-->
+  <script src="https://cdn.jsdelivr.net/momentjs/2.12.0/moment.min.js"></script>
+  <!--Link to javascript file-->
+  <script type="text/javascript" src="assets/javascript/logic.js"></script>
+
+</head>
+<body>
+  <div class="container">
+    <br>
+    <!-- Jumbotron Title -->
+    <div class="jumbotron">
+      <h1 class="text-center">Anytime is Train Time</h1>
+      <h3 class="text-center">Choo Choo. Chee Chee.</h3>
+    </div>
+    <div class="row">
+     <div class="col-lg-12">
+        <div class="card card-default">
+          <div class="card-header">
+            <h5>Current Train Schedule</h5>
+          </div>
+          </div>
+          <br>
+    <div class="row">
+      <div class="col-md-3">    
+       <strong>Train Name</strong>
+  </div>
+      <div class="col-md-3">
+       <strong>Destination</strong>
+    </div>
+      <div class="col-md-2">
+       <strong>Frequency(min)</strong>
+    </div>
+      <div class="col-md-2">
+       <strong>Next Arrival</strong>
+    </div>
+      <div class="col-md-2">
+       <strong>Minutes Away</strong>
+    </div>
+        </div>
+        <div id="train-list">
+        <div class="row">
+          <div class="col-md-3">
+            <div id="name-display">              
+            </div>
+          </div>
+          <div class="col-md-3">
+              <div id="role-display">              
+              </div>
+            </div>
+            <div class="col-md-2">
+                <div id="date-display">              
+                </div>
+              </div>
+              <div class="col-md-2">
+                  <div id="months-display">              
+                  </div>
+                </div>
+                <div class="col-md-2">
+                    <div id="rate-display">              
+                    </div>
+                  </div>
+                  <div class="col-md-2">
+                      <div id="billed-display">              
+                      </div>
+                    </div>
+                    </div>
+
+        </div>
+      </div>
+    </div>
+   <br>
+    <!-- Enter Information -->
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="card card-default">
+          <div class="card-header">
+            <h5>Add Train</h5>
+          </div>
+          <div class="card-body">
+            <form>
+              <div class="form-group row">
+                <label for="train-name">Train Name</label>
+                <input class="form-control" id="train-name" type="text">
+              </div>
+              <div class="form-group row">
+                <label for="destination">Role</label>
+                <input class="form-control" id="destination" type="text">
+              </div>
+              <div class="form-group row">
+                <label for="first-train">Start Date (MM/DD/YYYY)</label>
+                <input class="form-control" id="first-train" type="text">
+              </div>
+              <div class="form-group row">
+                <label for="frequency">Monthly Rate</label>
+                <input class="form-control" id="frequency" type="number">
+              </div>
+              <button class="btn btn-primary" id="submit-train" type="submit">Submit</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Script -->
+  <script src="logic.js"></script>
+</body>
+</html>
