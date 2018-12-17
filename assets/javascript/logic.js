@@ -1,8 +1,4 @@
-/* global moment firebase */
-
 // Initialize Firebase
-// Make sure to match the configuration to the script version number in the HTML
-// (Ex. 3.0 != 3.7.0)
 
 var config = {
   apiKey: "AIzaSyAl20DI6-xv1bTEWRjL47vhgCJK1JtLXCs",
@@ -18,18 +14,18 @@ firebase.initializeApp(config);
 // Create a variable to reference the database.
 var database = firebase.database();
 
-// -----------------------------
+//Code to capture the data on the submit button
 $("#submit-train").on("click", function(event) {
     event.preventDefault();
 
 // ------------------------------------
-// Initial Values from
+// Initial Values from form
 var train = $("#train-name").val().trim();
 var dest = $("#destination").val().trim();
 var fTrain = $("#first-train").val().trim();
 var frequency = $("#frequency").val().trim();
 
-
+//Setting up firebase database
 var empObj = {
     train: train,
     dest: dest,
@@ -38,8 +34,10 @@ var empObj = {
     dateAdded: firebase.database.ServerValue.TIMESTAMP
 };
 
+//Create the database with a subcategory of trains
 database.ref("trains").push(empObj);
 
+//Emptying form of values to prepare for next entry
 $("#train-name").val("");
 $("#destination").val("");
 $("#first-train").val("");
@@ -48,32 +46,28 @@ $("#frequency").val("");
 });
 
 
-
+//Setting up children of the trains database
 database.ref("trains").on("child_added", function (snapshot) {
-    console.log(snapshot.val());
-    console.log(snapshot.val().train);
-    console.log(snapshot.val().dest);
-    console.log(snapshot.val().firstTrain);
-    console.log(snapshot.val().freq);
- 
+     
+   //Creating variable to convert time
     var firstTimeConverted = moment(snapshot.val().firstTrain, "HH:mm").subtract(1, "years");
-    console.log(firstTimeConverted);
-
+    
+    //Creating variable to capture current time
     var currentTime = moment();
-    console.log("CURRENT TIME: " + moment(currentTime).format("hh:mm"));
 
+    //Variable to calculate the difference in times
     var diffTime = moment().diff(moment(firstTimeConverted), "minutes");
-    console.log("DIFFERENCE IN TIME: " + diffTime);
-
+    
+    //Variable to calculate remainder/modulus
     var tRemainder = diffTime % snapshot.val().freq;
-    console.log(tRemainder);
-
+    
+    //Variable to take remainder add it to frequency to calculate minutes until next train
     var tMinutesTillTrain = snapshot.val().freq - tRemainder;
-    console.log("MINUTES TILL TRAIN: " + tMinutesTillTrain);
-
+    
+    //Minutes to calculate until next train
     var nextTrain = moment().add(tMinutesTillTrain, "minutes");
-    console.log("ARRIVAL TIME: " + moment(nextTrain).format("hh:mm"));
-
+    
+    //Display values
     $("#train-list").append("<div class='row'><div class='col-md-3'>" + snapshot.val().train + "</div>" +
     "<div class='col-md-3'>" + snapshot.val().dest + "</div>" +
     "<div class='col-md-2'>" + snapshot.val().freq + "</div>" +
