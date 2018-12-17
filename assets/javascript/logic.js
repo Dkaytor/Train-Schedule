@@ -23,47 +23,62 @@ $("#submit-train").on("click", function(event) {
     event.preventDefault();
 
 // ------------------------------------
-// Initial Values
+// Initial Values from
 var train = $("#train-name").val().trim();
 var dest = $("#destination").val().trim();
 var fTrain = $("#first-train").val().trim();
-var freq = $("#frequency").val().trim();
+var frequency = $("#frequency").val().trim();
+
 
 var empObj = {
     train: train,
     dest: dest,
     firstTrain: fTrain,
-    freqMin: freq,
+    freq: frequency,
     dateAdded: firebase.database.ServerValue.TIMESTAMP
-}
+};
 
-database.ref("trains").push(trainObj);
+database.ref("trains").push(empObj);
+
+$("#train-name").val("");
+$("#destination").val("");
+$("#first-train").val("");
+$("#frequency").val("");
 
 });
+
+
 
 database.ref("trains").on("child_added", function (snapshot) {
     console.log(snapshot.val());
     console.log(snapshot.val().train);
     console.log(snapshot.val().dest);
     console.log(snapshot.val().firstTrain);
-    console.log(snapshot.val().freqMin);
+    console.log(snapshot.val().freq);
+ 
+    var firstTimeConverted = moment(snapshot.val().firstTrain, "HH:mm").subtract(1, "years");
+    console.log(firstTimeConverted);
 
-    var months = moment().diff(moment(snapshot.val().startDate),'months')
+    var currentTime = moment();
+    console.log("CURRENT TIME: " + moment(currentTime).format("hh:mm"));
 
-    var billed = months * snapshot.val().monthlyRate;
+    var diffTime = moment().diff(moment(firstTimeConverted), "minutes");
+    console.log("DIFFERENCE IN TIME: " + diffTime);
 
-    //var monthsWorked = dateAdded - dt1;
-    //console.log(dt1);
+    var tRemainder = diffTime % snapshot.val().freq;
+    console.log(tRemainder);
 
-    $("#full-member-list").append("<div class='row'><div class='col-md-2'>" + snapshot.val().name + "</div>" +
-    "<div class='col-md-2'>" + snapshot.val().role + "</div>" +
-    "<div class='col-md-2' >" + snapshot.val().startDate + "</div>" +
-    "<div class='col-md-2' >" + months + "</div>" +
-    "<div class='col-md-2'>" + snapshot.val().monthlyRate + "</div>" +
-    "<div class='col-md-2'>" + billed + "</div>" + "</div>");
+    var tMinutesTillTrain = snapshot.val().freq - tRemainder;
+    console.log("MINUTES TILL TRAIN: " + tMinutesTillTrain);
 
-   
+    var nextTrain = moment().add(tMinutesTillTrain, "minutes");
+    console.log("ARRIVAL TIME: " + moment(nextTrain).format("hh:mm"));
 
+    $("#train-list").append("<div class='row'><div class='col-md-3'>" + snapshot.val().train + "</div>" +
+    "<div class='col-md-3'>" + snapshot.val().dest + "</div>" +
+    "<div class='col-md-2'>" + snapshot.val().freq + "</div>" +
+    "<div class='col-md-2' >" + moment(nextTrain).format("hh:mm") + "</div>" +
+    "<div class='col-md-2'>" + tMinutesTillTrain + "</div>" + "</div>");
 
 })
 
