@@ -1,7 +1,7 @@
 .jumbotron {
   
   color: gainsboro;
-  background-image: url("c:/users/Dina/Train-Schedule/assets/css/tracks.png" );
+  background-image: url("tracks.png");
   text-align: center;
   border-bottom: 25px;
 }
