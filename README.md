@@ -7,3 +7,5 @@ how frequent the trains run.
 
 Using the time of when the first train starts running and the frequency it calculates how many minutes away
 the nex train is. Then it calculates the next train arrival.
+
+Deployed: https://dkaytor.github.io/Train-Schedule/
